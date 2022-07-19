@@ -29,9 +29,9 @@ echo \
 apt-get update
 ```
 ```
-apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 Установите Docker Engine
 ```
-apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
