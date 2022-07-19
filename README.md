@@ -1,37 +1,29 @@
-# Настройте репозиторий
-Обновите индекс ```apt``` пакета и установите пакеты, чтобы разрешить ```apt``` использование репозитория по протоколу HTTPS:
+# NGINX
 ```
-apt-get update
-```
-```
-apt-get install \
-  ca-certificates \
-  curl \
-  gnupg \
-  lsb-release
-```
-Добавьте официальный GPG-ключ Docker:
-```
-mkdir -p /etc/apt/keyrings
-```
-```
-curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-```
-Используйте следующую команду для настройки репозитория:
-```
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-# Установить движок Docker
-Обновите индекс ```apt``` пакета и установите последнюю версию Docker Engine, containerd и Docker Compose или перейдите к следующему шагу, чтобы установить конкретную версию:
-```
-apt-get update
-```
-```
-apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-```
-Установите Docker Engine
-```
-apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+upstream web {
+    server web:8000;
+}
+
+server {
+
+    listen 80;
+    server_name 149.154.64.149;
+
+    client_max_body_size 4G;
+
+    location / {
+        proxy_pass http://web;
+        proxy_redirect off;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /staticfiles/ {
+        alias  /root/gangx-docker-nginx/staticfiles/; # путь до staticfiles
+    }
+
+    location /media/ {
+        alias /root/gangx-docker-nginx/media/; # путь до media
+    }
+}
 ```
