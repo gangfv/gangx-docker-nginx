@@ -11,6 +11,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = False
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["*"]
 
 # APPS
 # ------------------------------------------------------------------------------
